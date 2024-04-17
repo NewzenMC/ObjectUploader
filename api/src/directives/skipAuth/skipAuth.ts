@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-import { createValidatorDirective } from '@redwoodjs/graphql-server'
+import {createValidatorDirective} from '@redwoodjs/graphql-server'
 
 export const schema = gql`
   """
@@ -10,7 +10,7 @@ export const schema = gql`
 `
 
 const skipAuth = createValidatorDirective(schema, () => {
-  return
+    return
 })
 
 export default skipAuth
