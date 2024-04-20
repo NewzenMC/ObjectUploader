@@ -1,7 +1,7 @@
 // https://prettier.io/docs/en/options.html
 /** @type {import('prettier').RequiredOptions} */
 module.exports = {
-    trailingComma: 'es5',
+    trailingComma: 'none',
     bracketSpacing: true,
     tabWidth: 4,
     semi: false,
