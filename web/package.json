@@ -1,33 +1,33 @@
 {
-    "name": "web",
-    "version": "0.0.0",
-    "private": true,
-    "browserslist": {
-        "development": [
-            "last 1 version"
-        ],
-        "production": [
-            "defaults"
-        ]
-    },
-    "dependencies": {
-        "@redwoodjs/forms": "7.4.1",
-        "@redwoodjs/router": "7.4.1",
-        "@redwoodjs/web": "7.4.1",
-        "react": "18.2.0",
-        "react-dom": "18.2.0"
-    },
-    "devDependencies": {
-        "@emotion/react": "^11.11.4",
-        "@mantine/core": "^7.8.0",
-        "@mantine/hooks": "^7.8.0",
-        "@redwoodjs/vite": "7.4.1",
-        "@tabler/icons-react": "^3.2.0",
-        "@types/react": "^18.2.55",
-        "@types/react-dom": "^18.2.19",
-        "postcss": "^8.4.38",
-        "postcss-loader": "^8.1.1",
-        "postcss-preset-mantine": "^1.14.4",
-        "postcss-simple-vars": "^7.0.1"
-    }
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "browserslist": {
+    "development": [
+      "last 1 version"
+    ],
+    "production": [
+      "defaults"
+    ]
+  },
+  "dependencies": {
+    "@redwoodjs/forms": "7.4.2",
+    "@redwoodjs/router": "7.4.2",
+    "@redwoodjs/web": "7.4.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.11.4",
+    "@mantine/core": "^7.8.0",
+    "@mantine/hooks": "^7.8.0",
+    "@redwoodjs/vite": "7.4.2",
+    "@tabler/icons-react": "^3.2.0",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "postcss": "^8.4.38",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-mantine": "^1.14.4",
+    "postcss-simple-vars": "^7.0.1"
+  }
 }
