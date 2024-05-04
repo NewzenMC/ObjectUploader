@@ -1,18 +1,13 @@
 import {
-    Avatar,
     Button,
     Card,
     Center,
     Container,
-    Dialog,
     Divider,
-    Grid,
-    Group,
     SimpleGrid,
     Text,
     Title
 } from '@mantine/core'
-import { IconLogout } from '@tabler/icons-react'
 
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
@@ -94,37 +89,6 @@ const HomePage = () => {
                         </Card>
                     </SimpleGrid>
                 </Center>
-                <Dialog opened radius="md" withBorder>
-                    <Text mb="xs" fw={500}>
-                        Actuellement connecté en tant que
-                    </Text>
-
-                    <Grid columns={4}>
-                        <Grid.Col span={3}>
-                            <Group>
-                                <Avatar src={null} />
-                                <Text
-                                    lineClamp={1}
-                                    maw={'60%'}
-                                    style={{ overflow: 'hidden' }}
-                                >
-                                    Hey Monique
-                                </Text>
-                            </Group>
-                        </Grid.Col>
-                        <Grid.Col span={1}>
-                            <Link to={routes.home()}>
-                                <Button
-                                    variant={'outline'}
-                                    color={'red'}
-                                    radius="md"
-                                >
-                                    <IconLogout />
-                                </Button>
-                            </Link>
-                        </Grid.Col>
-                    </Grid>
-                </Dialog>
             </Container>
         </>
     )

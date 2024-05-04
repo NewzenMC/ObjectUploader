@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@redwoodjs/api": "7.4.2",
-    "@redwoodjs/graphql-server": "7.4.2"
+    "@redwoodjs/auth-dbauth-api": "7.4.2",
+    "@redwoodjs/graphql-server": "7.4.2",
+    "openid-client": "^5.6.5"
   }
 }
