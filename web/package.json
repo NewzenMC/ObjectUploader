@@ -11,10 +11,10 @@
     ]
   },
   "dependencies": {
-    "@redwoodjs/auth-dbauth-web": "7.4.2",
-    "@redwoodjs/forms": "7.4.2",
-    "@redwoodjs/router": "7.4.2",
-    "@redwoodjs/web": "7.4.2",
+    "@redwoodjs/auth-dbauth-web": "7.4.3",
+    "@redwoodjs/forms": "7.4.3",
+    "@redwoodjs/router": "7.4.3",
+    "@redwoodjs/web": "7.4.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -22,7 +22,7 @@
     "@emotion/react": "^11.11.4",
     "@mantine/core": "^7.8.0",
     "@mantine/hooks": "^7.8.0",
-    "@redwoodjs/vite": "7.4.2",
+    "@redwoodjs/vite": "7.4.3",
     "@tabler/icons-react": "^3.2.0",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
