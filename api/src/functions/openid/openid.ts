@@ -32,7 +32,7 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
             return {
                 statusCode: 302,
                 headers: {
-                    'Set-Cookie': `${cookieName(dbAuthCookieName)}=; Max-Age=0; Path=/`,
+                    'Set-Cookie': `${cookieName(dbAuthCookieName)}=; Expires=${new Date(0).toUTCString()}; Path=/`,
                     Location: client.endSessionUrl(),
                 },
             }
