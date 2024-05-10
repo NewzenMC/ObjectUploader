@@ -1,7 +1,10 @@
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
 
-import { DbAuthHandler } from '@redwoodjs/auth-dbauth-api'
 import type { DbAuthHandlerOptions, UserType } from '@redwoodjs/auth-dbauth-api'
+import {
+    DbAuthHandler,
+    PasswordValidationError
+} from '@redwoodjs/auth-dbauth-api'
 
 import { cookieName } from 'src/lib/auth'
 import { db } from 'src/lib/db'
@@ -11,6 +14,8 @@ export const handler = async (
     context: Context
 ) => {
     const forgotPasswordOptions: DbAuthHandlerOptions['forgotPassword'] = {
+        enabled: false,
+
         // handler() is invoked after verifying that a user was found with the given
         // username. This is where you can send the user an email with a link to
         // reset their password. With the default dbAuth routes and field names, the
@@ -50,6 +55,8 @@ export const handler = async (
     }
 
     const loginOptions: DbAuthHandlerOptions['login'] = {
+        enabled: false,
+
         // handler() is called after finding the user that matches the
         // username/password provided at login, but before actually considering them
         // logged in. The `user` argument will be the user in the database that
@@ -61,8 +68,8 @@ export const handler = async (
         // didn't validate their email yet), throw an error and it will be returned
         // by the `logIn()` function from `useAuth()` in the form of:
         // `{ message: 'Error message' }`
-        handler: (user) => {
-            return user
+        handler: (_user) => {
+            throw new Error('Login Disabled')
         },
 
         errors: {
@@ -80,6 +87,8 @@ export const handler = async (
     }
 
     const resetPasswordOptions: DbAuthHandlerOptions['resetPassword'] = {
+        enabled: false,
+
         // handler() is invoked after the password has been successfully updated in
         // the database. Returning anything truthy will automatically log the user
         // in. Return `false` otherwise, and in the Reset Password page redirect the
@@ -111,6 +120,8 @@ export const handler = async (
         UserType,
         UserAttributes
     >['signup'] = {
+        enabled: false,
+
         // Whatever you want to happen to your data on new user signup. Redwood will
         // check for duplicate usernames before calling this handler. At a minimum
         // you need to save the `username`, `hashedPassword` and `salt` to your
@@ -126,27 +137,15 @@ export const handler = async (
         //
         // If this returns anything else, it will be returned by the
         // `signUp()` function in the form of: `{ message: 'String here' }`.
-        handler: ({
-            username,
-            hashedPassword,
-            salt,
-            userAttributes: _userAttributes
-        }) => {
-            return db.user.create({
-                data: {
-                    email: username,
-                    hashedPassword: hashedPassword,
-                    salt: salt
-                    // name: userAttributes.name
-                }
-            })
+        handler: (_opts) => {
+            throw new Error('Signup Disabled')
         },
 
         // Include any format checks for password here. Return `true` if the
         // password is valid, otherwise throw a `PasswordValidationError`.
         // Import the error along with `DbAuthHandler` from `@redwoodjs/api` above.
         passwordValidation: (_password) => {
-            return true
+            throw new PasswordValidationError('Password Validation Disabled')
         },
 
         errors: {
