@@ -1,8 +1,10 @@
-import type {APIGatewayEvent, APIGatewayProxyEvent, Context} from 'aws-lambda'
-import {Client, Issuer} from 'openid-client'
-import {cookieName, encryptSession} from "@redwoodjs/auth-dbauth-api";
-import {db} from 'src/lib/db'
-import {cookieName as dbAuthCookieName} from "src/lib/auth";
+import type { APIGatewayEvent, APIGatewayProxyEvent, Context } from 'aws-lambda'
+import { Client, Issuer } from 'openid-client'
+
+import { cookieName, encryptSession } from '@redwoodjs/auth-dbauth-api'
+
+import { cookieName as dbAuthCookieName } from 'src/lib/auth'
+import { db } from 'src/lib/db'
 
 let issuer: Issuer = null
 let client: Client = null
@@ -23,7 +25,9 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
             return {
                 statusCode: 302,
                 headers: {
-                    Location: client.authorizationUrl({scope: process.env.OPENID_SCOPES})
+                    Location: client.authorizationUrl({
+                        scope: process.env.OPENID_SCOPES
+                    })
                 }
             }
         case '/openid/callback':
@@ -32,9 +36,13 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
             return {
                 statusCode: 302,
                 headers: {
-                    'Set-Cookie': `${cookieName(dbAuthCookieName)}=; Expires=${new Date(0).toUTCString()}; Path=/`,
-                    Location: client.endSessionUrl(),
-                },
+                    'Set-Cookie': [
+                        `${cookieName(dbAuthCookieName)}=`,
+                        `Expires=${new Date(0).toUTCString()}`,
+                        'Path=/'
+                    ].join('; '),
+                    Location: client.endSessionUrl()
+                }
             }
         default:
             return {
@@ -44,7 +52,7 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
 }
 
 const callback = async (event: APIGatewayProxyEvent) => {
-    const {code} = event.queryStringParameters
+    const { code } = event.queryStringParameters
 
     try {
         const tokenSet = await client.callback(
@@ -62,8 +70,8 @@ const callback = async (event: APIGatewayProxyEvent) => {
             statusCode: 302,
             headers: {
                 'Set-Cookie': cookie,
-                Location: '/',
-            },
+                Location: '/'
+            }
         }
     } catch (e) {
         console.log(e)
@@ -74,18 +82,21 @@ const callback = async (event: APIGatewayProxyEvent) => {
 }
 
 const getUser = async (userInfo: any) => {
-    const name = userInfo.name.trim() !== '' ? userInfo.name : userInfo.preferred_username
+    const name =
+        userInfo.name.trim() !== ''
+            ? userInfo.name
+            : userInfo.preferred_username
     return db.user.upsert({
-        where: {id: userInfo.sub},
+        where: { id: userInfo.sub },
         create: {
             id: userInfo.sub,
             name,
-            avatar: userInfo.avatar,
+            avatar: userInfo.avatar
         },
         update: {
             name,
-            avatar: userInfo.avatar,
-        },
+            avatar: userInfo.avatar
+        }
     })
 }
 
@@ -97,10 +108,13 @@ const secureCookie = (data: any, exp: number) => {
         'HttpOnly=true',
         'Path=/',
         'SameSite=Strict',
-        `Secure=${process.env.NODE_ENV !== 'development'}`,
+        `Secure=${process.env.NODE_ENV !== 'development'}`
     ]
 
     const encrypted = encryptSession(JSON.stringify(data))
 
-    return [`${cookieName(dbAuthCookieName)}=${encrypted}`, ...cookieAttrs].join('; ')
+    return [
+        `${cookieName(dbAuthCookieName)}=${encrypted}`,
+        ...cookieAttrs
+    ].join('; ')
 }
