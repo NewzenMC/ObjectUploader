@@ -1,6 +1,7 @@
+import { Button } from '@mantine/core'
+
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
-import {Button} from "@mantine/core";
 
 const CommandLineUploadPage = () => {
     return (
@@ -25,7 +26,7 @@ const CommandLineUploadPage = () => {
 
             <Link to={routes.home()}>
                 <Button fullWidth mt="md" radius="md">
-                    Retour à l&quot;Accueil
+                    Retour à l&lsquo;Accueil
                 </Button>
             </Link>
         </>
