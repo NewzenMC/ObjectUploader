@@ -32,7 +32,7 @@ export default () => (
                 line-height: 1;
                 color: #2D3748;
               }
-            `,
+            `
             }}
         />
         <section>

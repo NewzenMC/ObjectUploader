@@ -15,13 +15,13 @@ import './index.css'
 const App = () => (
     <FatalErrorBoundary page={FatalErrorPage}>
         <RedwoodProvider titleTemplate="%PageTitle - %AppTitle">
-          <AuthProvider>
-              <MantineProvider theme={theme} defaultColorScheme={'auto'}>
-                  <RedwoodApolloProvider useAuth={useAuth}>
-                      <Routes />
-                  </RedwoodApolloProvider>
-              </MantineProvider>
-          </AuthProvider>
+            <AuthProvider>
+                <MantineProvider theme={theme} defaultColorScheme={'auto'}>
+                    <RedwoodApolloProvider useAuth={useAuth}>
+                        <Routes />
+                    </RedwoodApolloProvider>
+                </MantineProvider>
+            </AuthProvider>
         </RedwoodProvider>
     </FatalErrorBoundary>
 )
