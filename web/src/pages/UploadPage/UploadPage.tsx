@@ -1,4 +1,5 @@
-import { Button } from '@mantine/core'
+import { Button, Space, Title } from '@mantine/core'
+import { IconHome } from '@tabler/icons-react'
 
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
@@ -8,20 +9,17 @@ const UploadPage = () => {
         <>
             <Metadata title="Upload" description="Upload page" />
 
-            <h1>UploadPage</h1>
-            <p>
-                Find me in{' '}
-                <code>./web/src/pages/UploadPage/UploadPage.tsx</code>
-            </p>
-            <p>
-                My default route is named <code>upload</code>, link to me with `
-                <Link to={routes.upload()}>Upload</Link>`
-            </p>
+            <Space h="xl" />
+
+            <Title>Upload</Title>
+
             <Link to={routes.home()}>
                 <Button fullWidth mt="md" radius="md">
-                    Retour à l&lsquo;Accueil
+                    <IconHome />
                 </Button>
             </Link>
+
+            <Space h="md" />
         </>
     )
 }
