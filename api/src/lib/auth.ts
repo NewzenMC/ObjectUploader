@@ -35,13 +35,13 @@ export const getCurrentUser = async (session: Decoded) => {
     }
 
     return db.user.findUnique({
-        where: {id: session.id},
+        where: { id: session.id },
         select: {
             id: true,
             name: true,
             avatar: true
-        },
-    });
+        }
+    })
 }
 
 /**
