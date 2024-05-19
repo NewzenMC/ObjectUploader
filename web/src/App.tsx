@@ -11,6 +11,7 @@ import theme from '../config/mantine.config'
 
 import { AuthProvider, useAuth } from './auth'
 import './index.css'
+import '@mantine/dropzone/styles.css'
 
 const App = () => (
     <FatalErrorBoundary page={FatalErrorPage}>
