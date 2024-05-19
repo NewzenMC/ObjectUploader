@@ -1,4 +1,5 @@
-import { Button, Space } from '@mantine/core'
+import { Button, Space, Title } from '@mantine/core'
+import { IconHome } from '@tabler/icons-react'
 
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
@@ -10,15 +11,17 @@ const ListPage = () => {
         <>
             <Metadata title="List" description="List page" />
 
-            <h1>List</h1>
+            <Space h="xl" />
+
+            <Title>List</Title>
 
             <Link to={routes.home()}>
                 <Button fullWidth mt="md" radius="md">
-                    Retour à l&lsquo;Accueil
+                    <IconHome />
                 </Button>
             </Link>
 
-            <Space h="xl" />
+            <Space h="md" />
 
             <ObjectsCell />
         </>
