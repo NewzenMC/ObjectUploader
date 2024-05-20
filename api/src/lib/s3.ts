@@ -1,8 +1,14 @@
 import {
+    CompleteMultipartUploadCommand,
+    CreateMultipartUploadCommand,
     DeleteObjectCommand,
     ListObjectsV2Command,
-    S3Client
+    ListPartsCommand,
+    PutObjectCommand,
+    S3Client,
+    UploadPartCommand
 } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 const Bucket = process.env.S3_BUCKET
 const LIFECYCLE_EXPIRY =
@@ -42,6 +48,84 @@ export const deleteObject = async (key: string) => {
     })
 
     await s3.send(cmd)
+
+    return true
+}
+
+export const createPresignedPut = async (
+    key: string,
+    size: number
+): Promise<string> => {
+    const cmd = new PutObjectCommand({
+        Bucket,
+        Key: key,
+        ContentLength: Math.min(size, 5 * 1024 * 1024)
+    })
+
+    return await getSignedUrl(s3, cmd)
+}
+
+const PART_SIZE = 8 * 1024 * 1024
+
+export const createMultipartPresignedPut = async (
+    key: string,
+    size: number
+) => {
+    const { UploadId } = await s3.send(
+        new CreateMultipartUploadCommand({
+            Bucket,
+            Key: key
+        })
+    )
+
+    const nbParts = Math.ceil(size / PART_SIZE)
+
+    const parts = Array.from({ length: nbParts }, async (_, i) => {
+        const rangeStart = i * PART_SIZE
+        const rangeEnd = Math.min(rangeStart + PART_SIZE, size) - 1
+
+        const cmd = new UploadPartCommand({
+            Bucket,
+            Key: key,
+            UploadId,
+            PartNumber: i + 1,
+            ContentLength: rangeEnd - rangeStart + 1
+        })
+
+        return {
+            url: await getSignedUrl(s3, cmd),
+            partNumber: i + 1,
+            rangeStart,
+            rangeEnd
+        }
+    })
+
+    return {
+        uploadId: UploadId,
+        parts: await Promise.all(parts)
+    }
+}
+
+export const finishMultipartPresignedPut = async (
+    key: string,
+    uploadId: string
+) => {
+    const { Parts } = await s3.send(
+        new ListPartsCommand({
+            Bucket,
+            Key: key,
+            UploadId: uploadId
+        })
+    )
+
+    await s3.send(
+        new CompleteMultipartUploadCommand({
+            Bucket,
+            Key: key,
+            UploadId: uploadId,
+            MultipartUpload: { Parts }
+        })
+    )
 
     return true
 }
